@@ -130,8 +130,8 @@ private struct TieInstance(Arg0, Args...)
 }
 
 
-// to run tests: dmd -unittest -main  vlm/utils/destructing.d && ./vlm/utils/destructing
-// or: rdmd -unittest -main  vlm/utils/destructing.d
+// to run tests: dmd -unittest -main  vest/utils/tie.d && ./vest/utils/tie
+// or: rdmd -unittest -main  vest/utils/tie
 nothrow unittest {
     
     // Traversable
@@ -167,7 +167,6 @@ nothrow unittest {
 
     tie(i,pi,l) = [size_t.max, size_t.max, size_t.max];
     assert( tuple(i,pi,l) == tuple(size_t.max, float(size_t.max), cast(int) size_t.max ) );
-
 
     // Tuples
     int    x;

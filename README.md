@@ -5,6 +5,8 @@ Here I will keep my tools for the **D** programming language
 
 ## tie
 
+May destructing variables for ranges and tuples
+
 ```d
 import std.stdio   : writeln;
 import std.typecons : tuple;
