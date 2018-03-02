@@ -2,7 +2,7 @@
 // May destructing variables for itarable types and tuples
 // 
 
-module vlm.utils.tie;
+module vest.utils.tie;
 
 import std.range      : empty, popFront, front;
 import std.traits     : isIterable;

@@ -1,9 +1,9 @@
 #!/usr/bin/rdmd --shebang=-I../source -I.
 
-import vlm.utils;
+import vest.utils : tie;
 import std.stdio   : writeln;
 import std.typecons : tuple;
-//import vlm.utils.tie : tie;
+
 
 void main()
 {
