@@ -8,6 +8,7 @@ import std.range      : empty, popFront, front;
 import std.traits     : isIterable;
 import std.typecons   : Tuple, tuple, isTuple;
 import std.functional : forward;
+import std.meta       : staticMap;
 
 auto tie(Args...)(ref Args args) 
 {
@@ -15,110 +16,67 @@ auto tie(Args...)(ref Args args)
     return TieInstance!(Args)(args);
 }
 
+
+private alias ptr_t(T) = T*;
+
 /// Helper structure to collect pointers to arguments
-private struct PointersSeq(size_t level, Arg0)
+private struct PointersSeq(Args...)
 {
-    Arg0* item;
-
-    this(ref Arg0 arg0)
+    alias args_t = Tuple!(staticMap!(ptr_t, Args));
+    args_t items;
+    
+    this(ref Args args)
     {
-        item = &arg0;
-    }
-    void set(size_t index)(ref Arg0 arg0)
-        if(level == index)
-    {
-        *item = arg0;
-    }
-}
-
-private struct PointersSeq(size_t level, Arg0, Args...)
-{
-    Arg0* item;
-    PointersSeq!(level+1, Args) other;
-
-    this(ref Arg0 arg0, ref Args args)
-    {
-        item = &arg0;
-        other = args;
-    }
-
-    void set(size_t index)(auto ref Arg0 arg0)
-        if(level == index)
-    {
-        *item = arg0;
+        foreach(index, Arg; Args) {
+            items[index] = &args[index];
+        }
     }
     void set(size_t index, T)(auto ref T rhs)
-        if(level < index)
     {
-        other.set!(index)(rhs);
-    }
-
-}
-private alias PointersSeq(Arg0, Args...) = PointersSeq!(0, Arg0, Args);
-
-/// Helper template type. Usage on cast in TieInstance::applyTuple
-/// Allows to get access to its arguments by index
-private template args_indexed_t(size_t index, Arg0, Args...)
-{
-    static assert(index < Args.length + 1);
-    static if(0 == index) {
-        alias args_indexed_t = Arg0;
-    } else {
-        alias args_indexed_t = Args[index-1];
+        static assert(index < Args.length);
+        *items[index] = cast(Args[index]) rhs;
     }
 }
 
 /// Helper structure.
 /// Due to the overload of assignment operators allows to use expression tie(x, y, ...) = ...
-private struct TieInstance(Arg0, Args...)
+private struct TieInstance(Args...)
 {
-    PointersSeq!(Arg0, Args) items;
-    alias args_t(size_t index) = args_indexed_t!(index, Arg0, Args);
+    PointersSeq!(Args) items;
 
     // In the constructor retrive arguments pointers
-    this(ref Arg0 arg0, ref Args args)
+    this(ref Args args)
     {
-        items = PointersSeq!(Arg0, Args)(arg0, args);
-    }
-
-    // Helper method to iterate at compile time
-    private void applyTuple(size_t index, T...)(auto ref Tuple!(T) rhs)
-        if(T.length > 0)
-    {
-        // Cast operator allows extends argument types
-        // for example, you can write: 
-        // size_t a;
-        // tie(a) = tuple(5);
-        // because 5 is int, without cast it leads to compile error
-        items.set!index( cast(args_t!index) rhs[index] );
-        // At the same time iterate over index and tuple arguments
-        // (at compile time)
-        static if(index < T.length - 1 && index < Args.length) {
-            applyTuple!(index+1, T)(forward!rhs);
-        }
-        static assert(index < T.length);
+        items = PointersSeq!(Args)(args);
     }
 
     // overloading assignment operator (empty Tuple)
     void opAssign(Tuple!() rhs) {}
 
     // overloading assignment operator
-    void opAssign(T...)(auto ref Tuple!(T) rhs)
+    void opAssign(Types...)(auto ref Tuple!(Types) rhs)
     {
-        applyTuple!(0, T)( forward!rhs );
+        foreach(index, T; Types) {
+            static if(index < Args.length) {
+                items.set!index( rhs[index] );
+            }
+        }
     }
 
     // Helper method to iterate at compile time
+    pragma(inline, true)
     private void applyTravers(size_t index, T...)(auto ref T rhs)
         if(isIterable!T && !isTuple!T)
     {
         if(rhs.empty) return;
 
-        items.set!index(cast(args_t!index) rhs.front);
+        items.set!index(rhs.front);
+        
         rhs.popFront();
-        static if(index < Args.length) {
+        static if(index < Args.length-1) {
             applyTravers!(index+1, T)(forward!rhs);
         }
+        static assert(index < Args.length);
     }
 
     // overloading assignment operator for iterable types
@@ -128,6 +86,7 @@ private struct TieInstance(Arg0, Args...)
         applyTravers!(0, T)( forward!rhs );
     }
 }
+
 
 
 // to run tests: dmd -unittest -main  vest/utils/tie.d && ./vest/utils/tie
