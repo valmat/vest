@@ -1,7 +1,7 @@
 #!/usr/bin/rdmd --shebang=-I../source -I.
 
-import vest.utils : tie;
-import std.stdio   : writeln;
+import vest.utils   : tie;
+import std.stdio    : writeln;
 import std.typecons : tuple;
 
 

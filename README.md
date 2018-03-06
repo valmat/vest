@@ -2,6 +2,7 @@
 Here I will keep my tools for the **D** programming language
 
 - [tie](#tie)
+- [clicolor](#clicolor)
 
 ## tie
 
@@ -57,6 +58,25 @@ void main()
     writeln(x, y, z); // 15 world a
 }
 ```
+see [example](exmpls/test_tie.d)
+
+## clicolor
+
+Colorize console output
+
+```d
+import vest.utils.clicolors : c = color;
+import std.stdio : writeln;
+void main()
+{
+    writeln(
+        c.b, c.red,
+        "Lorem ipsum dolor sit amet, ",
+        c.reset
+    );
+}
+```
+see [example](exmpls/test_tie.d)
 
 ---
 [The MIT License](LICENSE)
