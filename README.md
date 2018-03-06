@@ -76,7 +76,7 @@ void main()
     );
 }
 ```
-see [example](exmpls/test_tie.d)
+see [example](exmpls/test_clicolors.d)
 
 ---
 [The MIT License](LICENSE)
