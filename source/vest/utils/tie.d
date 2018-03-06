@@ -16,14 +16,13 @@ auto tie(Args...)(ref Args args)
     return TieInstance!(Args)(args);
 }
 
-
 private alias ptr_t(T) = T*;
 
 /// Helper structure to collect pointers to arguments
 private struct PointersSeq(Args...)
 {
-    alias args_t = Tuple!(staticMap!(ptr_t, Args));
-    args_t items;
+    alias arg_ptrs_t(T...) = Tuple!(staticMap!(ptr_t, T));
+    arg_ptrs_t!(Args) items;
     
     this(ref Args args)
     {
