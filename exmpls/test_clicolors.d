@@ -1,12 +1,10 @@
 #!/usr/bin/rdmd --shebang=-I../source -I.
 
 import vest.utils.clicolors : c = color;
-import std.stdio    : writeln;
-
+import std.stdio : writeln;
 
 void main()
 {
-    
     enum auto tail = c.reset                 ~ 
         "reprehenderit "                     ~
         c.rev                                ~
@@ -45,5 +43,4 @@ void main()
         "Duis aute irure dolor in ",
         tail
     );
-
 }

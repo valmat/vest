@@ -4,7 +4,6 @@ import vest.utils   : tie;
 import std.stdio    : writeln;
 import std.typecons : tuple;
 
-
 void main()
 {
     // Traversable
