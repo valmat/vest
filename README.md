@@ -101,8 +101,8 @@ void main()
     auto rt = tuplizer(ri, rf, as);
 
     writeln(rt);  // [Tuple!(int, double, string)(50, 0.5, "str1"), Tuple!(int, double, string)(60, 0.4, "str2"), Tuple!(int, double, string)(70, 0.3, "str3")]
-    writeln(at.map!"a[2]".array); // ["str1", "str2", "str3"]
-    writeln(at.map!"a[0]".array); // [50, 60, 70]
+    writeln(rt.map!"a[2]".array); // ["str1", "str2", "str3"]
+    writeln(rt.map!"a[0]".array); // [50, 60, 70]
 }
 ```
 

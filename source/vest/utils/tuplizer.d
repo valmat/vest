@@ -99,7 +99,7 @@ unittest {
         tuple(70, 0.3, "str3")
     ];
 
-    assert( rt.equal(at));
-    assert(at.map!"a[2]".equal(as));
-    assert(at.map!"a[0]".equal(ri.array[0..3]) );
+    assert(rt.equal(at));
+    assert(rt.map!"a[2]".equal(as));
+    assert(rt.map!"a[0]".equal(ri.array[0..3]) );
 }

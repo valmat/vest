@@ -29,9 +29,9 @@ void main()
     writeln(rt);
     writeln(at);
     
-    writeln(at.map!"a[2]".array);
-    assert(at.map!"a[2]".equal(as));
+    writeln(rt.map!"a[2]".array);
+    assert(rt.map!"a[2]".equal(as));
 
-    writeln(at.map!"a[0]".array, ri.array[0..3]);
-    assert(at.map!"a[0]".equal(ri.array[0..3]) );
+    writeln(rt.map!"a[0]".array, ri.array[0..3]);
+    assert(rt.map!"a[0]".equal(ri.array[0..3]) );
 }
