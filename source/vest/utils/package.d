@@ -2,6 +2,7 @@ module vest.utils;
 
 public import vest.utils.tie;
 public import vest.utils.clicolors;
+public import vest.utils.tuplizer;
 
 
 // test:

@@ -89,7 +89,8 @@ private struct TieInstance(Args...)
 
 
 // to run tests: dmd -unittest -main  vest/utils/tie.d && ./vest/utils/tie
-// or: rdmd -unittest -main  vest/utils/tie
+// or: cd source 
+// rdmd -unittest -main  vest/utils/tie
 nothrow unittest {
     
     // Traversable

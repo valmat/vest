@@ -3,6 +3,7 @@ Here I will keep my tools for the **D** programming language
 
 - [tie](#tie)
 - [clicolor](#clicolor)
+- [tuplizer](#tuplizer)
 
 ## tie
 
@@ -78,6 +79,33 @@ void main()
 }
 ```
 see [example](exmpls/test_clicolors.d)
+
+## tuplizer
+Tuplize multiple iterators.
+It takes iterators and builds on them a new iterator from tuples of aggregated iterators.
+
+```d
+import vest.utils    : tuplizer;
+import std.stdio     : writeln;
+import std.typecons  : tuple, Tuple;
+import std.range     : iota;
+import std.array     : array;
+
+void main()
+{
+    auto rf = iota(0.5, 0.0, -0.1); // 0.5, 0.4, 0.3, 0.2, 0.1
+    auto ri = iota(50, 101, 10);    // 50,  60,  70,  80,  90,  100
+    auto as = ["str1", "str2", "str3"];
+
+    auto rt = tuplizer(ri, rf, as);
+
+    writeln(rt);  // [Tuple!(int, double, string)(50, 0.5, "str1"), Tuple!(int, double, string)(60, 0.4, "str2"), Tuple!(int, double, string)(70, 0.3, "str3")]
+    writeln(at.map!"a[2]".array); // ["str1", "str2", "str3"]
+    writeln(at.map!"a[0]".array); // [50, 60, 70]
+}
+```
+
+see [example](exmpls/test_tuplizer.d)
 
 ---
 [The MIT License](LICENSE)
