@@ -64,7 +64,7 @@ private struct TieInstance(Args...)
 
     // Helper method to iterate at compile time
     pragma(inline, true)
-    private void applyTravers(size_t index, T...)(auto ref T rhs)
+    private void applyTravers(size_t index, T)(auto ref T rhs)
         if(isIterable!T && !isTuple!T)
     {
         if(rhs.empty) return;
@@ -176,4 +176,23 @@ nothrow unittest {
 
     tie(v,u) = tuple(u,v);
     assert([u,v] == [27,15]);
+}
+
+unittest {
+    import std.range : iota;
+    size_t i, j, k, l, m;
+    tie(i,j,k) = iota(50, 91, 10);
+    assert([i,j,k] == [50,60,70]);
+
+    struct TestItrbl
+    {
+        int a = 0;
+        @property bool empty() {return a >= 10;}
+        @property int front()  {return a;}
+        void popFront() {++a;}
+    }
+
+    tie(i,j,k,l,m) = TestItrbl();
+    assert([i,j,k,l,m] == [0,1,2,3,4]);
+
 }

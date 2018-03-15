@@ -3,6 +3,7 @@
 import vest.utils   : tie;
 import std.stdio    : writeln;
 import std.typecons : tuple;
+import std.range    : iota;
 
 void main()
 {
@@ -26,7 +27,7 @@ void main()
     writeln([i,j,k]);
     assert([i,j,k] == [1, 2, size_t.init]);
 
-    tie(i,j,k) = [50,60,70,80,90];
+    tie(i,j,k) = iota(50, 91, 10); // [50,60,70,80,90]
     writeln([i,j,k]);
     assert([i,j,k] == [50,60,70]);
 
