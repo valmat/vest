@@ -78,9 +78,8 @@ public:
 }
 
 
-// to run tests: dmd -unittest -main  vest/utils/tie.d && ./vest/utils/tie
-// or: cd source 
-// rdmd -unittest -main  vest/utils/tuplizer
+// cd source 
+// rdmd -unittest -main  vest/range/tuplizer
 unittest {
     import std.typecons  : tuple, Tuple;
     import std.range     : iota;

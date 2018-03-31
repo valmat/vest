@@ -4,9 +4,7 @@ import std.stdio     : writeln;
 import std.range     : iota;
 import std.algorithm : map;
 import std.array     : array;
-
-import vest.range : expandNested, expandRecursively;
-
+import vest.range    : expandNested, expandRecursively;
 
 void main()
 {

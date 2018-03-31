@@ -3,7 +3,7 @@ Here I will keep my tools for the **D** programming language
 
 - [tie](#tie)
 - [cli colors](#clicolor)
-- [expand nested ranges](#expandNested)
+- [expand nested ranges](#expandnested)
 - [tuplizer](#tuplizer)
 
 ## tie

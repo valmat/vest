@@ -87,6 +87,9 @@ public:
 
 ////////////////////////////////////////////////
 
+// cd source 
+// rdmd -unittest -main  vest/range/expand_nested
+
 nothrow unittest {
     import std.range     : iota;
     import std.algorithm : map;
