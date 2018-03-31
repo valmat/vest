@@ -4,7 +4,7 @@
 // aggregated iterators.
 // 
 
-module vest.utils.tuplizer;
+module vest.range.tuplizer;
 
 import std.range      : empty, popFront, front;
 import std.typecons   : Tuple, tuple;

@@ -1,6 +1,6 @@
 #!/usr/bin/rdmd --shebang=-I../source -I.
 
-import vest.utils    : tuplizer;
+import vest.range    : tuplizer;
 import std.stdio     : writeln;
 import std.typecons  : tuple, Tuple;
 import std.range     : iota;
