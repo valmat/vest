@@ -1,6 +1,7 @@
 module vest.range;
 
 public import vest.range.tuplizer;
+public import vest.range.expand_nested;
 
 
 // test:

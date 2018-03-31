@@ -2,7 +2,8 @@
 Here I will keep my tools for the **D** programming language
 
 - [tie](#tie)
-- [clicolor](#clicolor)
+- [cli colors](#clicolor)
+- [expand nested ranges](#expandNested)
 - [tuplizer](#tuplizer)
 
 ## tie
@@ -61,7 +62,7 @@ void main()
     writeln(x, y, z); // 15 world a
 }
 ```
-see [example](exmpls/test_tie.d)
+see [example](exmpls/tie.d)
 
 ## clicolor
 
@@ -79,18 +80,144 @@ void main()
     );
 }
 ```
-see [example](exmpls/test_clicolors.d)
+see [example](exmpls/clicolors.d)
+
+
+## expandNested
+Expand nested ranges.
+
+
+```d
+import std.range     : iota;
+import std.algorithm : map;
+import std.array     : array;
+import vest.range    : expandNested, expandRecursively;
+
+void main()
+{
+  assert(iota(20, 25, 1)
+      .map!(x => iota(19, x, 1))
+      .expandNested
+      .array == [19, 19, 20, 19, 20, 21, 19, 20, 21, 22, 19, 20, 21, 22, 23]);
+
+  assert(iota(1, 6, 1)
+      .map!(x => [1,2])
+      .expandNested
+      .array == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]);
+
+  assert([
+          [1,2],
+          [3,4],
+          [5,6,7]
+      ].expandNested
+      .array == [1, 2, 3, 4, 5, 6, 7]);
+
+  assert([
+          [],
+          [1,2],
+          [],
+          [],
+          [3,4],
+          [],
+          [5,6,7]
+      ].expandNested
+      .array == [1, 2, 3, 4, 5, 6, 7]);
+
+  assert([
+          [
+              [1,2],
+              [3,4],
+          ],[
+              [5,6,7],
+              [8,9],
+          ],[
+              [],
+              [10,11,12],
+          ]
+      ].expandNested.expandNested
+      .array == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+
+  // Deep nesting
+  // expandNested!deep allow apply expandNested multiple times
+  assert([
+          [
+              [1,2],
+              [3,4],
+          ],[
+              [5,6,7],
+              [8,9],
+          ],[
+              [],
+              [10,11],
+          ]
+      ].expandNested!2
+      .array == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+  assert([
+          [
+              [
+                  [1,2],
+              ],[
+                  [3,4],
+              ]
+          ]
+      ].expandNested!3
+      .array == [1, 2, 3, 4]);
+
+  // Expand nesting recursively
+  assert([
+          [
+              [1,2],
+              [3,4],
+          ],[
+              [5,6,7],
+              [8,9],
+          ],[
+              [],
+              [],
+              [10,11],
+          ]
+      ].expandRecursively
+      .array == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] );
+
+  assert([
+          [
+              [
+                  [1,2],
+                  [3,4],
+              ],[
+                  [5,6,7],
+              ]
+          ],[
+              [
+                  [8,9],
+              ]
+          ]
+      ].expandRecursively
+      .array == [1, 2, 3, 4, 5, 6, 7, 8, 9] );
+
+  assert([[[[[[[[
+          ["hellow"],
+          [],
+          ["world"],
+      ]]]]]]]].expandRecursively
+      .array == ["hellow", "world"] );
+}
+```
+
+see [example](exmpls/expand_nested.d)
+
 
 ## tuplizer
 Tuplize multiple iterators.
 It takes iterators and builds on them a new iterator from tuples of aggregated iterators.
 
 ```d
-import vest.utils    : tuplizer;
-import std.stdio     : writeln;
-import std.typecons  : tuple, Tuple;
-import std.range     : iota;
-import std.array     : array;
+import vest         : tuplizer;
+import std.stdio    : writeln;
+import std.typecons : tuple, Tuple;
+import std.range    : iota;
+import std.array    : array;
 
 void main()
 {
@@ -106,7 +233,7 @@ void main()
 }
 ```
 
-see [example](exmpls/test_tuplizer.d)
+see [example](exmpls/uplizer.d)
 
 ---
 [The MIT License](LICENSE)
