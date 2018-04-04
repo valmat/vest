@@ -16,6 +16,7 @@ struct color {
     enum string ublink  = "\033[25m";    // unset blink
     enum string urev    = "\033[27m";    // unset reversion
 
+    enum string black   = "\033[30m";
     enum string red     = "\033[31m";
     enum string green   = "\033[32m";
     enum string yellow  = "\033[33m";
