@@ -21,7 +21,8 @@ private:
     Range r;
 public:
     this()(auto ref Range r) {
-        this.r = forward!r;
+        //this.r = forward!r; <-- ldc2 incompatible
+        this.r = r;
     }
 
     @property final
