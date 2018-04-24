@@ -41,6 +41,9 @@ public:
         this.range = range;
         if(!range.empty) {
             nested = range.front;
+        } else {
+            // if range is empty initialize nested by default
+            nested = typeof(range.front).init;
         }
     }
 
