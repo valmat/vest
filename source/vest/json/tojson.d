@@ -1,18 +1,11 @@
 module vest.json.tojson;
 
-
-import std.stdio : writefln, writeln, stdout, stderr;
-
-import std.json;
-import std.array;// : array;
-//import std.string;
-import std.algorithm;
-import std.meta;
-import std.traits;
-import std.conv : to;
-
-import std.typecons;
-import std.range;
+import std.json      : JSONValue;
+import std.array     : array, empty;
+import std.algorithm : map, filter;
+import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString;
+import std.conv      : to;
+import std.typecons  : isTuple;
 
 
 // Is field property of T

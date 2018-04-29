@@ -1,19 +1,10 @@
 #!/usr/bin/rdmd --shebang=-I../source -I.
 
-import std.stdio : writefln, writeln, stdout, stderr;
-
-import std.json;
-import std.array;// : array;
-//import std.string;
-import std.algorithm;
-import std.meta;
-import std.traits;
-import std.conv : to;
-
-import std.typecons;
-import std.range;
-
-import vest.json;// : toJson;
+import std.stdio     : writeln;
+import std.algorithm : map;
+import std.typecons  : tuple, Tuple;
+import std.range     : iota;
+import vest.json     : toJson;
 
 
 static struct SubNest {
@@ -35,8 +26,7 @@ struct MyStruct
     float pi   = 3.14;
 
     auto rng1 = iota(0, 3);
-    auto rng2 = [1,2,3].map!( (int v) {return tuple(v, SubNest(0.5 * v));}  );
-    //auto rng2 = [1,2,3].map!( (int v) {return SubNest(0.5 * v);}  );
+    auto rng2 = iota(4, 6).map!( (int v) {return tuple(v, SubNest(0.5 * v));}  );
     
     string str = "Hi";
 
@@ -94,7 +84,7 @@ void main()
     str.ptr2 = &str.i;
 
     str.writeln;
-    str.toJson.toPrettyString.writeln;
+    //str.toJson.toPrettyString.writeln;
     str.toJson.writeln;
 
     str.dic.toJson.toPrettyString.writeln;
