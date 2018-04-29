@@ -84,7 +84,7 @@ void main()
     str.ptr2 = &str.i;
 
     str.writeln;
-    //str.toJson.toPrettyString.writeln;
+    str.toJson.toPrettyString.writeln;
     str.toJson.writeln;
 
     str.dic.toJson.toPrettyString.writeln;
