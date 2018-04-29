@@ -5,6 +5,7 @@ Here I will keep my tools for the **D** programming language
 - [cli colors](#clicolor)
 - [expand nested ranges](#expandnested)
 - [tuplizer](#tuplizer)
+- [toJson](#toJson)
 
 ## tie
 
@@ -213,27 +214,95 @@ Tuplize multiple iterators.
 It takes iterators and builds on them a new iterator from tuples of aggregated iterators.
 
 ```d
-import vest         : tuplizer;
-import std.stdio    : writeln;
-import std.typecons : tuple, Tuple;
-import std.range    : iota;
-import std.array    : array;
+import std.stdio     : writeln;
+import std.algorithm : map;
+import std.typecons  : tuple, Tuple;
+import std.range     : iota;
+import vest.json     : toJson;
+
+
+static struct SubNest {
+    int  s = 5;
+    float get_s() const {return s;}
+};
+
+struct MyStruct
+{
+    static int q = 55;
+    enum r = 15;
+
+    int i      = 5;
+    auto rng1 = iota(0, 3);
+    auto rng2 = iota(4, 6).map!( (int v) {return tuple(v, SubNest(5 * v));}  );
+    string str = "Hi";
+    string[] strs = ["1", "2", "3"];
+
+    static struct Nest {
+        int x = 11;
+        SubNest[] sns = [SubNest(1), SubNest(2)];
+    };
+    Nest nest;
+
+    int * ptr1;
+    int * ptr2;
+
+    SubNest[string] dic;
+
+    bool flag = true;
+
+    auto tpl1 = tuple(80,"%");
+    auto tpl2 = tuple!("x", "y", "z")(2, 3, 4);
+
+    this(string a){}
+    ~this(){}
+    int get_i() const {return i;}
+}
+
 
 void main()
 {
-    auto rf = iota(0.5, 0.0, -0.1); // 0.5, 0.4, 0.3, 0.2, 0.1
-    auto ri = iota(50, 101, 10);    // 50,  60,  70,  80,  90,  100
-    auto as = ["str1", "str2", "str3"];
+    MyStruct mstr;
+    mstr.dic = [
+        "one" : SubNest(1),
+        "two" : SubNest(2),
+    ];
+    mstr.ptr2 = &str.i;
 
-    auto rt = tuplizer(ri, rf, as);
-
-    writeln(rt);  // [Tuple!(int, double, string)(50, 0.5, "str1"), Tuple!(int, double, string)(60, 0.4, "str2"), Tuple!(int, double, string)(70, 0.3, "str3")]
-    writeln(rt.map!"a[2]".array); // ["str1", "str2", "str3"]
-    writeln(rt.map!"a[0]".array); // [50, 60, 70]
+    mstr.toJson.toPrettyString.writeln;
 }
 ```
+Output equal to:
+```json
+{
+    "dic": {
+        "one": {"s": 1},"two": {"s": 2}
+    },
+    "flag": true,
+    "i": 5,
+    "nest": {
+        "sns": [
+            {"s": 1},{"s": 2}
+        ],
+        "x": 11
+    },
+    "ptr1": null,
+    "ptr2": 5,
+    "q": 55,
+    "r": 15,
+    "rng1": [0,1,2],
+    "rng2": [[4, {"s": 20}], [5, {"s": 25}]],
+    "str": "Hi",
+    "strs": ["1","2","3"],
+    "tpl1": [80,"%"],
+    "tpl2": {"x": 2, "y": 3, "z": 4}
+}
+```
+`toJson` converts structures, tuples, arrays, pointers etc to json recursively.
 
-see [example](exmpls/uplizer.d)
+see [example](exmpls/tojson.d)
+
+## toJson
+
 
 ---
 [The MIT License](LICENSE)
