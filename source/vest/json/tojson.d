@@ -73,6 +73,13 @@ enum isAssocTuple(alias T) = expandFieldNames(T.fieldNames)
     .array
     .length;
 
+// Forward directly
+JSONValue toJson()(auto ref JSONValue value)
+{
+    return value;
+}
+
+// Convert to json
 JSONValue toJson(T)(auto ref T value)
 {
     static if( isTuple!T ) {
@@ -133,7 +140,7 @@ unittest {
     import std.range     : iota;
     import std.array     : array;
     import std.algorithm : map, equal;
-    //import std.json;
+    import std.json      : parseJSON;
     //import std.stdio     : writeln;
 
     static struct SubNest {
@@ -225,9 +232,7 @@ unittest {
     mstr.ptr2 = &mstr.i;
     assert(mstr.toJson.toString == `{"c1":"e","c2":"Ё","dic":{"first":{"q":1,"r1":[5,"55"],"r2":{"r2":55}},"second":{"q":2,"r1":[5,"55"],"r2":{"r2":55}}},"flag":true,"i":5,"nest":{"sns":[{"q":1,"r1":[5,"55"],"r2":{"r2":55}},{"q":2,"r1":[5,"55"],"r2":{"r2":55}}],"x":11},"ptr1":null,"ptr2":5,"q":55,"r":15,"rng1":[0,1,2],"rng2":[[4,{"q":20,"r1":[5,"55"],"r2":{"r2":55}}],[5,{"q":25,"r1":[5,"55"],"r2":{"r2":55}}]],"str":"Hi","strs":["1","2","3"],"tpl1":[10,"%"],"tpl2":{"x":2,"y":3,"z":4},"tpl3":{"_1":"3","_2":4,"_3":{"q":101,"r1":[5,"55"],"r2":{"r2":55}},"id":2}}`);
 
-    //mstr.toJson.toPrettyString.writeln;
-    //mstr.toJson.writeln;
-
+    // Structure has template methods
     static struct HasTpl
     {
         int i      = 5;
@@ -239,4 +244,7 @@ unittest {
     }
     HasTpl htpl;
     assert(htpl.toJson.toString == `{"i":5}`);
+
+    // Forward json directly
+    assert(`{"q":100,"r":[1,2]}`.parseJSON.toJson.toString == `{"q":100,"r":[1,2]}`);
 }

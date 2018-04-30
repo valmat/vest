@@ -4,8 +4,8 @@ import std.stdio     : writeln;
 import std.algorithm : map;
 import std.typecons  : tuple, Tuple;
 import std.range     : iota;
+import std.json      : parseJSON;
 import vest.json     : toJson;
-
 
 static struct SubNest {
     float q = 0.01;
@@ -103,4 +103,7 @@ void main()
     HasTpl htpl;
     htpl.writeln;
     htpl.toJson.toPrettyString.writeln;
+
+    `{"q":100,"r":[1,2]}`.parseJSON.toPrettyString.writeln;
+    `{"q":100,"r":[1,2]}`.parseJSON.toJson.toPrettyString.writeln;
 }
