@@ -1,7 +1,7 @@
 # Vest
 
 [![Dub version](https://img.shields.io/dub/v/vest.svg)](https://code.dlang.org/packages/vest/~master)
-
+[![License](https://img.shields.io/dub/l/vest.svg)](https://code.dlang.org/packages/vest/)
 
 Tools for the **D** programming language
 
