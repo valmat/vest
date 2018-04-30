@@ -1,6 +1,6 @@
 # Vest
 
-[![Dub version](https://img.shields.io/dub/v/vest.svg)](https://github.com/valmat/vest)
+[![Dub version](https://img.shields.io/dub/v/vest.svg)](https://code.dlang.org/packages/vest/~master)
 
 
 Tools for the **D** programming language
