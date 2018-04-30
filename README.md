@@ -2,6 +2,8 @@
 
 [![Dub version](https://img.shields.io/dub/v/vest.svg)](https://code.dlang.org/packages/vest/~master)
 [![License](https://img.shields.io/dub/l/vest.svg)](https://code.dlang.org/packages/vest/)
+[![Build Status](https://travis-ci.org/valmat/vest.svg?branch=master)](https://travis-ci.org/valmat/vest)
+
 
 Tools for the **D** programming language
 
