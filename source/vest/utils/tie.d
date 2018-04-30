@@ -118,14 +118,14 @@ nothrow unittest {
     tie(i,j,k) = [-1,3.14];
     assert([i,j,k] == [size_t.max, 3, 70]);
 
-    float pi;
+    double pi;
     int l;
 
     tie(i,pi,l) = [3.14, 3.14, 3.14];
-    assert(tuple(i,pi,l) == tuple(size_t(3), float(3.14), 3));
+    assert(tuple(i,pi,l) == tuple(size_t(3), double(3.14), 3));
 
     tie(i,pi,l) = [size_t.max, size_t.max, size_t.max];
-    assert( tuple(i,pi,l) == tuple(size_t.max, float(size_t.max), cast(int) size_t.max ) );
+    assert( tuple(i,pi,l) == tuple(size_t.max, double(size_t.max), cast(int) size_t.max ) );
 
     // Tuples
     int    x;
