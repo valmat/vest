@@ -227,4 +227,16 @@ unittest {
 
     //mstr.toJson.toPrettyString.writeln;
     //mstr.toJson.writeln;
+
+    static struct HasTpl
+    {
+        int i      = 5;
+        this(string a){}
+        ~this(){}
+        int get_i() const {return i;}
+        int get_itpl()() const {return i;}
+        int get_itpl1(T)(T t) const {return i*t;}
+    }
+    HasTpl htpl;
+    assert(htpl.toJson.toString == `{"i":5}`);
 }
