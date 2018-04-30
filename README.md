@@ -1,5 +1,9 @@
-# Dlang utils
-Here I will keep my tools for the **D** programming language
+# Vest
+
+[![Dub version](https://img.shields.io/dub/v/vest.svg)](https://github.com/valmat/vest)
+
+
+Tools for the **D** programming language
 
 - [tie](#tie)
 - [cli colors](#clicolor)
@@ -11,7 +15,7 @@ Here I will keep my tools for the **D** programming language
 
 May destructing variables for ranges and tuples
 
-```d
+```D
 import vest.utils   : tie;
 import std.stdio    : writeln;
 import std.typecons : tuple;
@@ -69,7 +73,7 @@ see [example](exmpls/tie.d)
 
 Colorize console output
 
-```d
+```D
 import vest.utils.clicolors : c = color;
 import std.stdio : writeln;
 void main()
@@ -88,7 +92,7 @@ see [example](exmpls/clicolors.d)
 Expand nested ranges.
 
 
-```d
+```D
 import std.range     : iota;
 import std.algorithm : map;
 import std.array     : array;
@@ -213,7 +217,7 @@ see [example](exmpls/expand_nested.d)
 Tuplize multiple iterators.
 It takes iterators and builds on them a new iterator from tuples of aggregated iterators.
 
-```d
+```D
 import vest         : tuplizer;
 import std.stdio    : writeln;
 import std.typecons : tuple, Tuple;
@@ -240,7 +244,7 @@ see [example](exmpls/uplizer.d)
 
 `toJson` converts structures, tuples, arrays, pointers etc to json recursively.
 
-```d
+```D
 import std.stdio     : writeln;
 import std.algorithm : map;
 import std.typecons  : tuple, Tuple;
