@@ -6,11 +6,23 @@ import std.algorithm : map, filter;
 import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString;
 import std.conv      : to;
 import std.typecons  : isTuple;
+import std.meta      : Alias;
 
 
 // Is field property of T
 private
-enum isProperty(T, string field) = !isType!(__traits(getMember, T, field)) && !isFunction!(__traits(getMember, T, field));
+//enum isProperty(T, string field) = !isType!(__traits(getMember, T, field)) && !isFunction!(__traits(getMember, T, field));
+template isProperty(T, string field)
+{
+    alias fieldValue = Alias!(__traits(getMember, T, field));
+    
+    //pragma(msg, "typeof :",  is(typeof(fieldValue) == void) );
+
+
+    enum isProperty = !isType!(fieldValue) && !isFunction!(fieldValue) && !is(typeof(fieldValue) == void);
+    //enum isProperty = !isType!(__traits(getMember, T, field)) && !isFunction!(__traits(getMember, T, field));
+}
+
 
 // Check if field is accessible
 private
@@ -27,6 +39,11 @@ template _retriveProperties(T, string[] fields)
         enum string[] _retriveProperties = [];
     } else {
         static if( isAccessible!(T, fields[0]) && isProperty!(T, fields[0])  ) {
+
+            //pragma(msg,  fields[0]);
+            //pragma(msg, typeof(__traits(getMember, T, fields[0])).stringof );
+            //pragma(msg,  "\n");
+
             enum _retriveProperties = [fields[0]] ~ _retriveProperties!(T, fields[1..$]);
         } else {
             enum _retriveProperties = _retriveProperties!(T, fields[1..$]);
