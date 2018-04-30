@@ -125,7 +125,7 @@ nothrow unittest {
     assert(tuple(i,pi,l) == tuple(size_t(3), double(3.14), 3));
 
     tie(i,pi,l) = [size_t.max, size_t.max, size_t.max];
-    assert( tuple(i,pi,l) == tuple(size_t.max, double(size_t.max), cast(int) size_t.max ) );
+    assert( tuple(i,pi,l) == tuple(size_t.max, cast(double) size_t.max, cast(int) size_t.max ) );
 
     // Tuples
     int    x;
