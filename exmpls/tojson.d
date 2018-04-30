@@ -72,15 +72,15 @@ struct MyStruct
     }
 }
 
-
+// Structure contains template methods
 struct HasTpl
 {
     int i      = 5;
     this(string a){}
     ~this(){}
     int get_i() const {return i;}
-    int get_itpl()() const {return i;}
-    int get_itpl1(T)(T t) const {return i*t;}
+    int get_itpl1()() const {return i;}
+    int get_itpl2(T)(T t) const {return i*t;}
 }
 
 

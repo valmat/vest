@@ -11,16 +11,10 @@ import std.meta      : Alias;
 
 // Is field property of T
 private
-//enum isProperty(T, string field) = !isType!(__traits(getMember, T, field)) && !isFunction!(__traits(getMember, T, field));
 template isProperty(T, string field)
 {
     alias fieldValue = Alias!(__traits(getMember, T, field));
-    
-    //pragma(msg, "typeof :",  is(typeof(fieldValue) == void) );
-
-
-    enum isProperty = !isType!(fieldValue) && !isFunction!(fieldValue) && !is(typeof(fieldValue) == void);
-    //enum isProperty = !isType!(__traits(getMember, T, field)) && !isFunction!(__traits(getMember, T, field));
+    enum  isProperty = !isType!(fieldValue) && !isFunction!(fieldValue) && !is(typeof(fieldValue) == void);
 }
 
 
@@ -39,11 +33,6 @@ template _retriveProperties(T, string[] fields)
         enum string[] _retriveProperties = [];
     } else {
         static if( isAccessible!(T, fields[0]) && isProperty!(T, fields[0])  ) {
-
-            //pragma(msg,  fields[0]);
-            //pragma(msg, typeof(__traits(getMember, T, fields[0])).stringof );
-            //pragma(msg,  "\n");
-
             enum _retriveProperties = [fields[0]] ~ _retriveProperties!(T, fields[1..$]);
         } else {
             enum _retriveProperties = _retriveProperties!(T, fields[1..$]);
@@ -73,8 +62,8 @@ enum isAssocTuple(alias T) = expandFieldNames(T.fieldNames)
     .array
     .length;
 
-// Forward directly
-JSONValue toJson()(auto ref JSONValue value)
+// Forward JSONValue directly
+auto toJson()(auto ref JSONValue value)
 {
     return value;
 }
@@ -153,7 +142,6 @@ unittest {
             return q;
         }
     }
-
 
     SubNest sn;
     assert(sn.toJson.toString == `{"q":100,"r1":[5,"55"],"r2":{"r2":55}}`);
