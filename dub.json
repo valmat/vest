@@ -1,0 +1,8 @@
+{
+	"name": "vest",
+	"description": "Dlang tools",
+	"targetType": "library",
+    "authors": ["Valmat"],
+    "homepage": "https://github.com/valmat/vest",
+    "license": "MIT"
+}
