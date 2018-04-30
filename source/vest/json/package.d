@@ -1,7 +1,7 @@
 module vest.json;
 
 public import vest.json.tojson;
-
+public import vest.json.utils;
 
 // test:
 // cd source
