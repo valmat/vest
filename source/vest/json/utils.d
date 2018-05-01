@@ -27,12 +27,15 @@ const(JSONValue)* checkNull()(auto ref JSONValue v, string field) pure @safe
 // cd source
 // rdmd -unittest -main  vest/json/utils
 unittest {
+    //import std.stdio     : writeln;
     import std.algorithm : map;
     import std.json      : parseJSON;
     import std.math      : approxEqual;
 
     assert([-1, 1, 0.5, -0.5].approxEqual(parseJSON(`[-1,1,0.5,-0.5]`).array.map!(x => x.numeric)));
     assert(parseJSON(`0.5`).numeric.approxEqual(0.5));
+    assert(parseJSON(size_t.max.to!string).numeric == size_t.max);
+
     assert(null != parseJSON(`{"a":5,"b":null}`).checkNull("a"));
     assert(null == parseJSON(`{"a":5,"b":null}`).checkNull("b"));
     assert(null == parseJSON(`{"a":5,"b":null}`).checkNull("c"));

@@ -1,3 +1,4 @@
 .dub/*
 vest-test-library
 *.lst
+*.txt
