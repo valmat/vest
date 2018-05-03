@@ -11,11 +11,14 @@ struct color {
     enum string u       = "\033[4m";    // underline
     enum string blink   = "\033[5m";    // flashing (if supported by terminal)
     enum string rev     = "\033[7m";    // reversion (swap the background color, symbols color)
-    enum string norm    = "\033[22m";    // set normal intensity
-    enum string uu      = "\033[24m";    // unset underline
-    enum string ublink  = "\033[25m";    // unset blink
-    enum string urev    = "\033[27m";    // unset reversion
+    enum string hidden  = "\033[8m";    // hidden
+    enum string norm    = "\033[22m";   // set normal intensity
+    enum string uu      = "\033[24m";   // unset underline
+    enum string ublink  = "\033[25m";   // unset blink
+    enum string urev    = "\033[27m";   // unset reversion
 
+
+    enum string dflt    = "\033[39m"; // default color
     enum string black   = "\033[30m";
     enum string red     = "\033[31m";
     enum string green   = "\033[32m";
@@ -25,6 +28,17 @@ struct color {
     enum string cyan    = "\033[36m";
     enum string gray    = "\033[37m";
     alias       grey    = gray;
+    enum string white   = "\033[97m";
+
+    // light colors
+    struct light {
+        enum string red     = "\033[91m";
+        enum string green   = "\033[92m";
+        enum string yellow  = "\033[93m";
+        enum string blue    = "\033[94m";
+        enum string magenta = "\033[95m";
+        enum string cyan    = "\033[96m";
+    };
 
     struct background {
         enum string black   = "\033[40m";
