@@ -15,7 +15,7 @@ Tools for the **D** programming language
 
 ## tie
 
-May destructing variables for ranges and tuples
+May destructuring variables for ranges and tuples
 
 ```D
 import vest.utils   : tie;

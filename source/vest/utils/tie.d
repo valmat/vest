@@ -1,5 +1,5 @@
 // 
-// May destructing variables for itarable types and tuples
+// May destructuring variables for itarable types and tuples
 // 
 
 module vest.utils.tie;
