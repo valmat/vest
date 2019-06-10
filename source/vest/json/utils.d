@@ -4,7 +4,7 @@ import std.json : JSONValue, JSONException, JSON_TYPE;
 import std.conv : to;
 
 // Cast to any numeric
-double numeric()(auto ref JSONValue v) {
+double numeric()(auto ref const(JSONValue) v) {
     switch(v.type) {
         case JSON_TYPE.FLOAT    :
             return v.floating;
@@ -18,7 +18,7 @@ double numeric()(auto ref JSONValue v) {
 }
 
 // Check if property exists and is not null
-const(JSONValue)* checkNull()(auto ref JSONValue v, string field) pure @safe
+const(JSONValue)* checkNull()(auto ref const(JSONValue) v, string field) pure @safe
 {
     const(JSONValue)* ptr =  field in v;
     return (ptr && ptr.type != JSON_TYPE.NULL) ? ptr : null;
