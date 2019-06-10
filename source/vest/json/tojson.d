@@ -3,11 +3,11 @@ module vest.json.tojson;
 import std.json      : JSONValue;
 import std.array     : array, empty;
 import std.algorithm : map, filter;
-import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString;
+import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString, OriginalType;
 import std.conv      : to;
 import std.typecons  : isTuple;
 import std.meta      : Alias;
-
+import std.typecons  : tuple;
 
 // Is field property of T
 private
@@ -90,6 +90,15 @@ JSONValue toJson(T)(auto ref T value)
             }
             return JSONValue(rez);
         }
+    } else static if(is(T == enum)) {
+        // Enums
+        static foreach(enum field; allProperties!T ) {
+            if(value == __traits(getMember, T, field)) {
+                return tuple!("key", "value")(field, cast(OriginalType!T) value)
+                    .toJson();
+            }
+        }
+        assert(0);
     } else static if( isArray!T && !isSomeString!T ) {
     // Arrays
         return JSONValue(value.map!(x => x.toJson()).array);
@@ -235,4 +244,16 @@ unittest {
 
     // Forward json directly
     assert(`{"q":100,"r":[1,2]}`.parseJSON.toJson.toString == `{"q":100,"r":[1,2]}`);
+
+    // Enums
+    enum kla_t : int {kla1 = 1, kla2, kla3}
+    assert(kla_t.kla2.toJson.toString == `{"key":"kla2","value":2}`);
+
+    enum sta_t : string
+    {
+        sta1 = "sta1_v",
+        sta2 = "sta2_v",
+        sta3 = "sta3_v"
+    }
+    assert(sta_t.sta3.toJson.toString == `{"key":"sta3","value":"sta3_v"}`);
 }
