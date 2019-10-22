@@ -3,7 +3,8 @@ module vest.json.tojson;
 import std.json      : JSONValue;
 import std.array     : array, empty;
 import std.algorithm : map, filter;
-import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString, OriginalType;
+import std.traits    : isType, isFunction, isArray, isAssociativeArray, isIterable, isPointer, isSomeChar, isSomeString;
+import std.traits    : Unqual, OriginalType;
 import std.conv      : to;
 import std.typecons  : isTuple;
 import std.meta      : Alias;
@@ -99,6 +100,9 @@ JSONValue toJson(T)(auto ref T value)
             }
         }
         assert(0);
+    } else static if( Unqual!T.stringof == "DateTime" ) {
+    // DateTime
+        return JSONValue(value.toISOExtString());
     } else static if( isArray!T && !isSomeString!T ) {
     // Arrays
         return JSONValue(value.map!(x => x.toJson()).array);
