@@ -1,16 +1,16 @@
 module vest.json.utils;
 
-import std.json : JSONValue, JSONException, JSON_TYPE;
+import std.json : JSONValue, JSONException, JSONType;
 import std.conv : to;
 
 // Cast to any numeric
 double numeric()(auto ref const(JSONValue) v) {
     switch(v.type) {
-        case JSON_TYPE.FLOAT    :
+        case JSONType.float_    :
             return v.floating;
-        case JSON_TYPE.INTEGER  :
+        case JSONType.integer  :
             return v.integer;
-        case JSON_TYPE.UINTEGER :
+        case JSONType.uinteger :
             return v.uinteger;
         default:
             throw new JSONException("JSONValue is a " ~ to!string(v.type) ~ ", not a numeric.");
@@ -21,7 +21,7 @@ double numeric()(auto ref const(JSONValue) v) {
 const(JSONValue)* checkNull()(auto ref const(JSONValue) v, string field) pure @safe
 {
     const(JSONValue)* ptr =  field in v;
-    return (ptr && ptr.type != JSON_TYPE.NULL) ? ptr : null;
+    return (ptr && ptr.type != JSONType.null_) ? ptr : null;
 }
 
 // cd source
