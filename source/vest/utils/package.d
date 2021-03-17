@@ -1,6 +1,7 @@
 module vest.utils;
 
 public import vest.utils.tie;
+public import vest.utils.bitint;
 public import vest.utils.clicolors;
 
 
