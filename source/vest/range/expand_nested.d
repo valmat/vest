@@ -2,7 +2,7 @@ module vest.range.expand_nested;
 
 import std.range      : empty, popFront, front, isInputRange, ElementType;
 import std.functional : forward;
-import std.traits     : isNarrowString;
+import std.traits     : isNarrowString, Unqual;
 
 // Recursive expands nested iterators
 auto expandNested(size_t depth = 1, Range)(auto ref Range range)
@@ -31,7 +31,7 @@ auto expandRecursively(Range)(auto ref Range range)
 private struct Expander(Range)
 {
 private:
-    alias nested_t = typeof(Range.init.front);
+    alias nested_t = Unqual!(typeof(Range.init.front));
     Range range;
     nested_t nested;
 public:
@@ -318,4 +318,12 @@ nothrow unittest {
             ["world"],
         ]]]]]]]].expandRecursively
         .array == ["hellow", "world"] );
+
+    {
+        const(int)[][] arr = [[], [21], [21, 22], [21, 22, 23]];
+        assert(arr.expandNested.array == [21, 21, 22, 21, 22, 23]);
+    }{
+        const(int[])[] arr = [[], [21], [21, 22], [21, 22, 23]];
+        assert(arr.expandNested.array == [21, 21, 22, 21, 22, 23]);
+    }
 }
