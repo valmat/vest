@@ -30,10 +30,10 @@ unittest {
     //import std.stdio     : writeln;
     import std.algorithm : map;
     import std.json      : parseJSON;
-    import std.math      : approxEqual;
+    import std.math      : isClose;
 
-    assert([-1, 1, 0.5, -0.5].approxEqual(parseJSON(`[-1,1,0.5,-0.5]`).array.map!(x => x.numeric)));
-    assert(parseJSON(`0.5`).numeric.approxEqual(0.5));
+    assert([-1, 1, 0.5, -0.5].isClose(parseJSON(`[-1,1,0.5,-0.5]`).array.map!(x => x.numeric), 1e-05, 1e-05));
+    assert(parseJSON(`0.5`).numeric.isClose(0.5, 1e-05, 1e-05));
     assert(parseJSON(size_t.max.to!string).numeric == size_t.max);
 
     assert(null != parseJSON(`{"a":5,"b":null}`).checkNull("a"));

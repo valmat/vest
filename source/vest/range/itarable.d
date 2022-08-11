@@ -48,15 +48,11 @@ iItarable!(ElType) getItarable(ElType, Range)(Range r) {
 // rdmd -unittest -main  vest/range/itarable
 
 unittest {
-    //import std.stdio     : writeln;
     import std.range     : iota;
     import std.algorithm : map;
-    //import std.array     : array;
-    import std.math      : approxEqual;
-    import std.algorithm.comparison : equal;
-
+    import std.math      : isClose;
+    import std.algorithm : equal;
     import vest.range    : expandNested;
-
 
     assert(iota(20, 25, 1)
         .map!(x => iota(21, x, 1))
@@ -75,7 +71,7 @@ unittest {
             iota(10, 16).getItarable!float,
         ]
         .expandNested
-        .approxEqual([1.1, 2.1, 10.0, 11.0, 12.0, 13.0, 14.0, 15]));
+        .isClose([1.1, 2.1, 10.0, 11.0, 12.0, 13.0, 14.0, 15], 1e-05, 1e-05));
 
 
     interface iTest {
